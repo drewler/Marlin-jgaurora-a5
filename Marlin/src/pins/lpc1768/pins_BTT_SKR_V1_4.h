@@ -48,27 +48,25 @@
 //
 // TMC StallGuard DIAG pins
 //
-// #define X_DIAG_PIN         P1_29   // X-STOP
+#define X_DIAG_PIN         P1_29   // X-STOP
 #define Y_DIAG_PIN         P1_28   // Y-STOP
 #define Z_DIAG_PIN         P1_27   // Z-STOP
 #define E0_DIAG_PIN        P1_26   // E0DET
-// #define E1_DIAG_PIN        P1_25   // E1DET
+#define E1_DIAG_PIN        P1_25   // E1DET
 
 //
 // Limit Switches
 //
-// #if X_STALL_SENSITIVITY
-//   #define X_STOP_PIN       X_DIAG_PIN
-//   #if X_HOME_DIR < 0
-//     #define X_MAX_PIN      P1_26   // E0DET
-//   #else
-//     #define X_MIN_PIN      P1_26   // E0DET
-//   #endif
-// #else
-//   #define X_STOP_PIN       P1_29   // X-STOP
-// #endif
-
-#define X_STOP_PIN       P1_29   // X-STOP
+#if X_STALL_SENSITIVITY
+  #define X_STOP_PIN       X_DIAG_PIN
+  #if X_HOME_DIR < 0
+    #define X_MAX_PIN      P1_26   // E0DET
+  #else
+    #define X_MIN_PIN      P1_26   // E0DET
+  #endif
+#else
+  #define X_STOP_PIN       P1_29   // X-STOP
+#endif
 
 #if Y_STALL_SENSITIVITY
   #define Y_STOP_PIN       Y_DIAG_PIN
@@ -81,27 +79,29 @@
   #define Y_STOP_PIN       P1_28   // Y-STOP
 #endif
 
-// #if Z_STALL_SENSITIVITY
-//   #define Z_STOP_PIN       Z_DIAG_PIN
-//   #if Z_HOME_DIR < 0
-//     #define Z_MAX_PIN      P1_00   // PWRDET
-//   #else
-//     #define Z_MIN_PIN      P1_00   // PWRDET
-//   #endif
-// #else
-//   #ifndef Z_STOP_PIN
-//     #define Z_STOP_PIN     P1_27   // Z-STOP
-//   #endif
-// #endif
-
-#define Z_STOP_PIN     P0_10   // Z-STOP
+#if Z_STALL_SENSITIVITY
+  #define Z_STOP_PIN       Z_DIAG_PIN
+  #if Z_HOME_DIR < 0
+    #define Z_MAX_PIN      P1_00   // PWRDET
+  #else
+    #define Z_MIN_PIN      P1_00   // PWRDET
+  #endif
+#else
+  #ifndef Z_STOP_PIN
+    #define Z_STOP_PIN     P1_27   // Z-STOP
+  #endif
+#endif
 
 //
 // Z Probe (when not Z_MIN_PIN)
 //
-// #ifndef Z_MIN_PROBE_PIN
-//   #define Z_MIN_PROBE_PIN  P0_10
-// #endif
+#ifndef Z_MIN_PROBE_PIN
+  #if Z_STOP_PIN != P1_27
+    #define Z_MIN_PROBE_PIN P1_27
+  #else
+    #define Z_MIN_PROBE_PIN P0_10
+  #endif
+#endif
 
 //
 // Filament Runout Sensor
