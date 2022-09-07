@@ -1229,11 +1229,7 @@
   #endif
 #endif
 
-#define DEFAULT_EJERK    2.0  // May be used by Linear Advance
-// Backup
-// #define DEFAULT_EJERK    5.0  // May be used by Linear Advance
-// Anycubic
-// #define DEFAULT_EJERK    5.0  // May be used by Linear Advance
+#define DEFAULT_EJERK    5.0  // May be used by Linear Advance
 
 /**
  * Junction Deviation Factor
